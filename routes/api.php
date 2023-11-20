@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TaxController;
+use App\Http\Controllers\UnitController;
+use App\Models\EntityDocumentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +23,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::resource("categories", CategoryController::class);
+Route::resource("currencies", CurrencyController::class);
+Route::resource("taxes", TaxController::class);
+Route::resource("units", UnitController::class);
+Route::resource("products", ProductController::class);

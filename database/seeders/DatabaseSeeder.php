@@ -18,5 +18,62 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        // Categories
+        \App\Models\Category::create([
+            'name' => 'Seguridad',
+        ]);
+        \App\Models\Category::create([
+            'name' => 'Sensores',
+        ]);
+        \App\Models\Category::create([
+            'name' => 'Otros',
+        ]);
+
+        // Currencies
+        \App\Models\Currency::create([
+            'name' => 'Soles',
+            'short_name' => 'PEN',
+            'symbol' => 'S/',
+        ]);
+        \App\Models\Currency::create([
+            'name' => 'Dólares americanos',
+            'short_name' => 'USD',
+            'symbol' => '$',
+        ]);
+
+        // Units
+        \App\Models\Unit::create([
+            'name' => 'UNIDAD (BIENES)',
+            'code' => 'NIU',
+        ]);
+        \App\Models\Unit::create([
+            'name' => 'UNIDAD (SERVICIOS)',
+            'code' => 'ZZ',
+        ]);
+        \App\Models\Unit::create([
+            'name' => 'METRO',
+            'code' => 'MTR',
+        ]);
+
+        // Taxes
+        \App\Models\Tax::create([
+            'code' => '10',
+            'name' => 'IGV',
+            'percentage' => 0.18,
+            'type' => '1000',
+        ]);
+        \App\Models\Tax::create([
+            'code' => '10',
+            'name' => 'IGV',
+            'percentage' => 0.10,
+            'type' => '1000',
+        ]);
+        \App\Models\Tax::create([
+            'code' => '20',
+            'name' => 'Exonerado',
+            'percentage' => 0.00,
+            'type' => '9996',
+        ]);
     }
 }
