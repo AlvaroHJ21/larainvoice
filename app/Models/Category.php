@@ -13,4 +13,8 @@ class Category extends Model
         'name',
         'is_active',
     ];
+
+    protected $attributes=[
+        'is_active'=>true,
+    ];
 }
