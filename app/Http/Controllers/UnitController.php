@@ -11,8 +11,8 @@ class UnitController extends Controller
     public function index()
     {
         $ok = true;
-        $results = Unit::all();
-        return response()->json(compact('ok', 'results'));
+        $data = Unit::all();
+        return response()->json(compact('ok', 'data'));
     }
 
     public function update(Request $request, Unit $unit)
@@ -27,7 +27,8 @@ class UnitController extends Controller
         }
         $ok = true;
         $unit->update($request->all());
-        $result = $unit;
-        return response()->json(compact('ok', 'result'));
+        $data = $unit;
+        $message = 'Unidad actualizada exitosamente';
+        return response()->json(compact('ok', 'data', 'message'));
     }
 }

@@ -10,7 +10,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $results = Product::with(
+        $data = Product::with(
             "category:id,name",
             "unit:id,name",
             "selling_price_currency:id,name",
@@ -19,7 +19,7 @@ class ProductController extends Controller
         )->get();
 
         $ok = true;
-        return response()->json(compact("ok", "results"));
+        return response()->json(compact("ok", "data"));
     }
 
     public function store(Request $reques)
@@ -46,9 +46,9 @@ class ProductController extends Controller
             return response()->json(compact("ok", "errors"), 400);
         }
 
-        $result = Product::create($reques->all());
+        $data = Product::create($reques->all());
 
         $ok = true;
-        return response()->json(compact("ok", "result"));
+        return response()->json(compact("ok", "data"));
     }
 }

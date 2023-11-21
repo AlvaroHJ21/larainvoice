@@ -18,4 +18,8 @@ class Tax extends Model
     ];
 
     public $timestamps = false;
+
+    public $casts = [
+        "percentage" => "float",
+    ];
 }
