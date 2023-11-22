@@ -111,7 +111,7 @@ class ProductController extends Controller
         }
 
         $ok = true;
-        $message = "Producto eliminado correctamente {$product->image}";
+        $message = "Producto eliminado correctamente";
         return response()->json(compact("ok", "message"));
     }
 }
