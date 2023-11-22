@@ -31,5 +31,7 @@ Route::resource("currencies", CurrencyController::class);
 Route::resource("taxes", TaxController::class);
 Route::resource("units", UnitController::class);
 Route::resource("products", ProductController::class);
+
 Route::post("images", [ImageController::class, "uploadImage"]);
 Route::get('images/{filename}', [ImageController::class, "getImage"])->where('filename', '.*');
+Route::delete('images/{filename}', [ImageController::class, "deleteImage"])->where('filename', '.*');

@@ -32,6 +32,18 @@ class ImageController extends Controller
         return response()->json(compact('ok', 'data'), 201);
     }
 
+    public function deleteImage(String $filename)
+    {
+        $path = 'public/images/' . $filename;
+        if (Storage::exists($path)) {
+            Storage::delete($path);
+            $ok = true;
+            $message = "Imagen eliminada correctamente";
+            return response()->json(compact('ok', 'message'));
+        }
+        abort(404);
+    }
+
     //servir imagen
     public function getImage(String $filename)
     {
