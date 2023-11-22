@@ -15,7 +15,7 @@ class ProductController extends Controller
             "unit:id,name",
             "selling_price_currency:id,name",
             "buy_price_currency:id,name",
-            "tax:id,name",
+            "tax:id,name,percentage",
         )->get();
 
         $ok = true;
@@ -32,11 +32,9 @@ class ProductController extends Controller
             "image" => "string",
             "selling_price" => "required|numeric",
             "selling_price_currency_id" => "required|integer",
-            "buy_price" => "required|numeric",
-            "buy_price_currency_id" => "required|integer",
+            "buy_price" => "numeric",
+            "buy_price_currency_id" => "integer",
             "tax_id" => "required|integer",
-            "discount_type" => "required|integer",
-            "discount_value" => "required|numeric",
             "is_active" => "boolean",
         ]);
 
@@ -47,8 +45,24 @@ class ProductController extends Controller
         }
 
         $data = Product::create($reques->all());
+        $data->load(
+            "category:id,name",
+            "unit:id,name",
+            "selling_price_currency:id,name",
+            "buy_price_currency:id,name",
+            "tax:id,name,percentage",
+        );
 
         $ok = true;
-        return response()->json(compact("ok", "data"));
+        $message = "Producto creado correctamente";
+        return response()->json(compact("ok", "data", "message"));
+    }
+
+    public function destroy(Product $product)
+    {
+        $product->delete();
+        $ok = true;
+        $message = "Producto eliminado correctamente";
+        return response()->json(compact("ok", "message"));
     }
 }

@@ -18,10 +18,12 @@ return new class extends Migration
             $table->foreignId("category_id")->constrained("categories");
             $table->foreignId("unit_id")->constrained("units");
             $table->string("image")->nullable();
-            $table->decimal("selling_price", 10, 2);
+
+            $table->decimal("selling_price", 10, 4);
             $table->foreignId("selling_price_currency_id")->constrained("currencies");
-            $table->decimal("buy_price", 10, 2);
-            $table->foreignId("buy_price_currency_id")->constrained("currencies");
+            $table->decimal("buy_price", 10, 4)->nullable()->default(0);
+            $table->foreignId("buy_price_currency_id")->nullable()->constrained("currencies");
+
             $table->foreignId("tax_id")->constrained("taxes");
             $table->smallInteger("discount_type")->default(0);
             $table->decimal("discount_value", 10, 2)->default(0);

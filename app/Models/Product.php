@@ -25,6 +25,11 @@ class Product extends Model
         "is_active",
     ];
 
+    public $casts = [
+        "selling_price" => "float",
+        "buy_price" => "float",
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class);
