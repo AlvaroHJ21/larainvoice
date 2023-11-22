@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\UnitController;
@@ -30,3 +31,5 @@ Route::resource("currencies", CurrencyController::class);
 Route::resource("taxes", TaxController::class);
 Route::resource("units", UnitController::class);
 Route::resource("products", ProductController::class);
+Route::post("images", [ImageController::class, "uploadImage"]);
+Route::get('images/{filename}', [ImageController::class, "getImage"])->where('filename', '.*');
