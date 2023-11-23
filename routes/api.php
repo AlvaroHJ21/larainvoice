@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StorehouseController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\UnitController;
 use App\Models\EntityDocumentType;
@@ -35,3 +36,5 @@ Route::resource("products", ProductController::class);
 Route::post("images", [ImageController::class, "uploadImage"]);
 Route::get('images/{filename}', [ImageController::class, "getImage"])->where('filename', '.*');
 Route::delete('images/{filename}', [ImageController::class, "deleteImage"])->where('filename', '.*');
+
+Route::resource("storehouses", StorehouseController::class);
