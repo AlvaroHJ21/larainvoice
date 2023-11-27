@@ -49,8 +49,7 @@ class InventoryController extends Controller
         //crear el movimiento inicial
         $movement = Movement::create([
             "type" => 1,
-            "product_id" => $request->product_id,
-            "storehouse_id" => $request->storehouse_id,
+            "inventory_id" => $inventory->id,
             "quantity" => $request->total,
         ]);
 

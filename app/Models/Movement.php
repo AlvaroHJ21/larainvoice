@@ -11,18 +11,22 @@ class Movement extends Model
 
     protected $fillable = [
         'type',
-        'product_id',
-        'storehouse_id',
+        'inventory_id',
         'quantity',
     ];
 
+    public function inventory()
+    {
+        return $this->belongsTo(Inventory::class);
+    }
+
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class)->via('inventory');
     }
 
     public function storehouse()
     {
-        return $this->belongsTo(Storehouse::class);
+        return $this->belongsTo(Storehouse::class)->via('inventory');
     }
 }

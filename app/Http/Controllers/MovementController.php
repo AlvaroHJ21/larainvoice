@@ -11,7 +11,16 @@ class MovementController extends Controller
 {
     public function index()
     {
-        $data = Movement::with("product", "storehouse")->get();
+        $data = Movement::with("inventory.product", "inventory.storehouse")->get();
+        $ok = true;
+        return response()->json(compact("ok", "data"));
+    }
+
+    public function byInventory($inventory_id)
+    {
+        $data = Movement::with("inventory.product:id,name,code", "inventory.storehouse:id,name")
+            ->where("inventory_id", $inventory_id)
+            ->get();
         $ok = true;
         return response()->json(compact("ok", "data"));
     }
@@ -20,8 +29,7 @@ class MovementController extends Controller
     {
         $validator = Validator::make($request->all(), [
             "type" => "required|numeric|in:0,1",
-            "product_id" => "required|numeric",
-            "storehouse_id" => "required|numeric",
+            "inventory_id" => "required|numeric",
             "quantity" => "required|numeric|min:0",
         ]);
 
@@ -29,31 +37,6 @@ class MovementController extends Controller
             $ok = false;
             $errors = $validator->errors()->all();
             return response()->json(compact("ok", "errors"));
-        }
-
-        // validar si existe un inventario para el producto y almacen
-        $inventory = Inventory::where("product_id", $request->product_id)
-            ->where("storehouse_id", $request->storehouse_id)
-            ->first();
-
-        if ($inventory) {
-            // actualizar el inventario
-
-            if ($request->type == 0) {
-                // salida
-                $inventory->total -= $request->quantity;
-            } else {
-                // entrada
-                $inventory->total += $request->quantity;
-            }
-            $inventory->save();
-        } else {
-            // crear el inventario con la cantidad
-            $inventory = Inventory::create([
-                "product_id" => $request->product_id,
-                "storehouse_id" => $request->storehouse_id,
-                "total" => $request->quantity,
-            ]);
         }
 
         // crear el movimiento

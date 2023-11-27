@@ -44,3 +44,4 @@ Route::resource("storehouses", StorehouseController::class);
 Route::resource("configurations", ConfigurationController::class);
 Route::resource("inventories", InventoryController::class)->only(["index", "store", "update"]);
 Route::resource("movements", MovementController::class)->only(["index", "store"]);
+Route::get("movements/by-inventory/{inventory_id}", [MovementController::class, "byInventory"]);
