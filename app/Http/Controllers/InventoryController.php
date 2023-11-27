@@ -16,6 +16,15 @@ class InventoryController extends Controller
         return response()->json(compact("ok", "data"));
     }
 
+    public function byStorehouse($storehouse_id)
+    {
+        $data = Inventory::with("product:id,name,code", "storehouse:id,name")
+            ->where("storehouse_id", $storehouse_id)
+            ->get();
+        $ok = true;
+        return response()->json(compact("ok", "data"));
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [

@@ -23,4 +23,9 @@ class Storehouse extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class);
+    }
 }

@@ -29,4 +29,41 @@ class Movement extends Model
     {
         return $this->belongsTo(Storehouse::class)->via('inventory');
     }
+
+    static public function movementsByInventory($inventory_id)
+    {
+        $data = Movement::with("inventory.product:id,name,code", "inventory.storehouse:id,name")
+            ->where("inventory_id", $inventory_id)
+            ->orderBy("created_at", "desc")
+            ->get();
+        return $data;
+    }
+
+    static public function movementsByProduct($product_id)
+    {
+        $data = Movement::with("inventory.product:id,name,code", "inventory.storehouse:id,name")
+            ->whereHas(
+                "inventory",
+                function ($query) use ($product_id) {
+                    $query->where("product_id", $product_id);
+                }
+            )
+            ->orderBy("created_at", "desc")
+            ->get();
+        return $data;
+    }
+
+    static public function movementsByStorehouse($storehouse_id)
+    {
+        $data = Movement::with("inventory.product:id,name,code", "inventory.storehouse:id,name")
+            ->whereHas(
+                "inventory",
+                function ($query) use ($storehouse_id) {
+                    $query->where("storehouse_id", $storehouse_id);
+                }
+            )
+            ->orderBy("created_at", "desc")
+            ->get();
+        return $data;
+    }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Inventory;
 use App\Models\Movement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -11,16 +10,23 @@ class MovementController extends Controller
 {
     public function index()
     {
-        $data = Movement::with("inventory.product", "inventory.storehouse")->get();
+        $data = Movement::with("inventory.product", "inventory.storehouse")
+            ->orderBy("created_at", "desc")
+            ->get();
         $ok = true;
         return response()->json(compact("ok", "data"));
     }
 
     public function byInventory($inventory_id)
     {
-        $data = Movement::with("inventory.product:id,name,code", "inventory.storehouse:id,name")
-            ->where("inventory_id", $inventory_id)
-            ->get();
+        $data = Movement::movementsByInventory($inventory_id);
+        $ok = true;
+        return response()->json(compact("ok", "data"));
+    }
+
+    public function byProduct($product_id)
+    {
+        $data = Movement::movementsByProduct($product_id);
         $ok = true;
         return response()->json(compact("ok", "data"));
     }

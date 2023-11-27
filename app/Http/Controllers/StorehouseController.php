@@ -39,6 +39,7 @@ class StorehouseController extends Controller
     public function show(Storehouse $storehouse)
     {
         $ok = true;
+        $storehouse->load("inventories.product:id,name,code");
         $data = $storehouse;
         return response()->json(compact("ok", "data"));
     }
