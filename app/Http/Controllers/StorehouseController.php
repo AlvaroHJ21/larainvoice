@@ -36,6 +36,13 @@ class StorehouseController extends Controller
         return response()->json(compact("data", "ok", "message"));
     }
 
+    public function show(Storehouse $storehouse)
+    {
+        $ok = true;
+        $data = $storehouse;
+        return response()->json(compact("ok", "data"));
+    }
+
     public function update(Request $request, Storehouse $storehouse)
     {
         $validator = Validator::make($request->all(), [

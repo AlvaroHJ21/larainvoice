@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProductController;
@@ -38,3 +39,4 @@ Route::get('images/{filename}', [ImageController::class, "getImage"])->where('fi
 Route::delete('images/{filename}', [ImageController::class, "deleteImage"])->where('filename', '.*');
 
 Route::resource("storehouses", StorehouseController::class);
+Route::resource("configurations", ConfigurationController::class);

@@ -14,10 +14,10 @@ class ProductController extends Controller
         $data = Product::with(
             "category:id,name",
             "unit:id,name",
-            "selling_price_currency:id,name",
+            "selling_price_currency:id,name,symbol",
             "buy_price_currency:id,name",
             "tax:id,name,percentage",
-        )->get();
+        )->orderBy("created_at", "desc")->get();
 
         $ok = true;
         return response()->json(compact("ok", "data"));
@@ -49,7 +49,7 @@ class ProductController extends Controller
         $data->load(
             "category:id,name",
             "unit:id,name",
-            "selling_price_currency:id,name",
+            "selling_price_currency:id,name,symbol",
             "buy_price_currency:id,name",
             "tax:id,name,percentage",
         );
@@ -91,7 +91,7 @@ class ProductController extends Controller
         $data->load(
             "category:id,name",
             "unit:id,name",
-            "selling_price_currency:id,name",
+            "selling_price_currency:id,name,symbol",
             "buy_price_currency:id,name",
             "tax:id,name,percentage",
         );
