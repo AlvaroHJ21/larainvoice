@@ -4,6 +4,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\MovementController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StorehouseController;
 use App\Http\Controllers\TaxController;
@@ -40,3 +42,5 @@ Route::delete('images/{filename}', [ImageController::class, "deleteImage"])->whe
 
 Route::resource("storehouses", StorehouseController::class);
 Route::resource("configurations", ConfigurationController::class);
+Route::resource("inventories", InventoryController::class)->only(["index", "store", "update"]);
+Route::resource("movements", MovementController::class)->only(["index", "store"]);
