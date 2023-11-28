@@ -15,4 +15,10 @@ class EntityDocumentType extends Model
         'abbreviated',
         'is_active',
     ];
+
+    protected $attributes = [
+        'is_active' => true,
+    ];
+
+    public $timestamps = false;
 }

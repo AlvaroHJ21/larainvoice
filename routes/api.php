@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\EntityController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\MovementController;
@@ -47,3 +48,5 @@ Route::get("inventories/by-storehouse/{storehouse_id}", [InventoryController::cl
 Route::resource("movements", MovementController::class)->only(["index", "store"]);
 Route::get("movements/by-inventory/{inventory_id}", [MovementController::class, "byInventory"]);
 Route::get("movements/by-product/{product_id}", [MovementController::class, "byProduct"]);
+
+Route::resource("entities", EntityController::class);

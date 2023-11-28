@@ -77,5 +77,22 @@ class DatabaseSeeder extends Seeder
             'percentage' => 0.00,
             'type' => '9996',
         ]);
+
+        // EntityDocumentTypes
+        \App\Models\EntityDocumentType::create([
+            'code' => '1',
+            'name' => 'Documento Nacional de Identidad',
+            'abbreviated' => 'DNI',
+        ]);
+        \App\Models\EntityDocumentType::create([
+            'code' => '6',
+            'name' => 'Registro Único de Contribuyentes',
+            'abbreviated' => 'RUC',
+        ]);
+        \App\Models\EntityDocumentType::create([
+            'code' => '0',
+            'name' => 'OTROS',
+            'abbreviated' => 'OTROS',
+        ]);
     }
 }
