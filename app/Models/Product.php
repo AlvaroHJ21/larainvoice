@@ -20,8 +20,6 @@ class Product extends Model
         "buy_price",
         "buy_price_currency_id",
         "tax_id",
-        "discount_type",
-        "discount_value",
         "is_active",
     ];
 

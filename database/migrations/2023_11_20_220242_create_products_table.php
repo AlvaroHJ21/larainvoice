@@ -25,8 +25,6 @@ return new class extends Migration
             $table->foreignId("buy_price_currency_id")->nullable()->constrained("currencies");
 
             $table->foreignId("tax_id")->constrained("taxes");
-            $table->smallInteger("discount_type")->default(0);
-            $table->decimal("discount_value", 10, 2)->default(0);
             $table->boolean("is_active")->default(true);
             $table->timestamps();
         });

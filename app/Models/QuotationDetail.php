@@ -17,8 +17,42 @@ class QuotationDetail extends Model
         "description_add",
         "quantity",
         "price_base",
-        "price_taxed",
         "tax_id",
         "unit_id",
+        "discount",
+        "discount_type",
+        "discount_percent",
     ];
+
+    public $casts = [
+        "price_base" => "float",
+        "discount" => "float",
+        "discount_percent" => "float",
+    ];
+
+    protected $attributes = [
+        "discount" => 0,
+        "discount_type" => 1,
+        "discount_percent" => 0,
+    ];
+
+    public function quotation()
+    {
+        return $this->belongsTo(Quotation::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function tax()
+    {
+        return $this->belongsTo(Tax::class);
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
 }

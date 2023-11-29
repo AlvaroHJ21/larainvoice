@@ -14,15 +14,20 @@ return new class extends Migration
         Schema::create('quotation_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId("quotation_id")->constrained("quotations");
-            $table->foreignId("product_id")->constrained("products");
             $table->string("code");
             $table->string("description");
-            $table->string("description_add");
+            $table->string("description_add")->nullable();
+            $table->foreignId("product_id")->constrained("products");
             $table->integer("quantity");
-            $table->decimal("price_base", 10, 4);
-            $table->decimal("price_taxed", 10, 4);
             $table->foreignId("tax_id")->constrained("taxes");
             $table->foreignId("unit_id")->constrained("units");
+
+            $table->decimal("price_base", 10, 4);
+
+            $table->decimal("discount", 10, 4)->default(0);
+            $table->smallInteger("discount_type")->default(1);
+            $table->decimal("discount_percent", 10, 4)->default(0);
+
             $table->timestamps();
         });
     }

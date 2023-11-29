@@ -13,14 +13,21 @@ return new class extends Migration
     {
         Schema::create('quotations', function (Blueprint $table) {
             $table->id();
-            $table->string("number");
+            $table->integer("number");
             $table->foreignId("currency_id")->constrained("currencies");
             $table->foreignId("entity_id")->constrained("entities");
             $table->foreignId("user_id")->constrained("users");
-            $table->decimal("discount", 10, 4);
-            $table->smallInteger("discount_type");
-            $table->decimal("discount_percent", 10, 4);
+
+            $table->decimal("discount", 10, 4)->default(0);
+            $table->smallInteger("discount_type")->default(1);
+            $table->decimal("discount_percent", 10, 4)->default(0);
+
+            $table->decimal("subtotal", 10, 4);
+            $table->decimal("total_igv", 10, 4);
             $table->decimal("total_pay", 10, 4);
+
+            $table->string("note")->nullable();
+            $table->string("observations")->nullable();
             $table->timestamps();
         });
     }

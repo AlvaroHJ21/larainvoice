@@ -9,6 +9,7 @@ use App\Http\Controllers\ImageController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\MovementController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\StorehouseController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\UnitController;
@@ -53,3 +54,5 @@ Route::resource("entities", EntityController::class);
 
 Route::get("exchange-rates/todays-change", [ExchangeRateController::class, "todaysChange"]);
 Route::resource("exchange-rates", ExchangeRateController::class);
+
+Route::resource("quotations", QuotationController::class);
