@@ -51,4 +51,5 @@ Route::get("movements/by-product/{product_id}", [MovementController::class, "byP
 
 Route::resource("entities", EntityController::class);
 
+Route::get("exchange-rates/todays-change", [ExchangeRateController::class, "todaysChange"]);
 Route::resource("exchange-rates", ExchangeRateController::class);
