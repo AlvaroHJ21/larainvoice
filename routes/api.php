@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\EntityController;
+use App\Http\Controllers\ExchangeRateController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\MovementController;
@@ -11,7 +12,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StorehouseController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\UnitController;
-use App\Models\EntityDocumentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -50,3 +50,5 @@ Route::get("movements/by-inventory/{inventory_id}", [MovementController::class, 
 Route::get("movements/by-product/{product_id}", [MovementController::class, "byProduct"]);
 
 Route::resource("entities", EntityController::class);
+
+Route::resource("exchange-rates", ExchangeRateController::class);
