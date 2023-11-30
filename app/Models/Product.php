@@ -26,6 +26,7 @@ class Product extends Model
     public $casts = [
         "selling_price" => "float",
         "buy_price" => "float",
+        "is_active" => "boolean",
     ];
 
     public function category()
