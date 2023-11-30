@@ -1,0 +1,80 @@
+@page {
+    margin-top: 3.2cm;
+}
+
+img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+    display: inline-block;
+}
+
+.header {
+    width: 100%;
+    position: fixed;
+    top: -2cm;
+    height: 1.5cm;
+}
+
+.table-empresa {
+    border-collapse: collapse;
+    width: 200px;
+    height: 100%;
+}
+
+.table-empresa td {
+    padding: 0rem;
+}
+
+/* Table Document Info */
+
+.table-document-info {
+    margin-bottom: 1rem;
+}
+
+.table-document-info td {
+    padding: 0.2rem;
+}
+
+.table-document-info td:first-child {
+    font-weight: bold;
+}
+
+/* Table Details */
+
+.table-details {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.table-details td {
+    padding: 0.2rem;
+}
+
+.table-details thead {
+    border: 1px solid #000;
+}
+
+.table-details th {
+    padding: 0.4rem 0.2rem;
+    text-align: left;
+}
+
+.table-details th.text-right,
+.table-details td.text-right {
+    text-align: right;
+}
+
+/* Table amounts */
+
+.table-amounts {
+    width: 200px;
+}
+.table-amounts td {
+    padding: 0.2rem 0rem;
+    text-align: right;
+}
+
+.text-amount {
+    font-weight: bold;
+}

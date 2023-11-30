@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Num2Letters;
+use App\Models\Business;
 use App\Models\Quotation;
 use App\Models\QuotationDetail;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -217,5 +220,60 @@ class QuotationController extends Controller
             $errors = ["Error al actualizar la cotizacion"];
             return response()->json(compact("ok", "errors"));
         }
+    }
+
+    public function pdf(Quotation $quotation)
+    {
+
+        $details = $quotation->details;
+        // $details->load("product", "tax", "unit");
+
+        // dd($details);
+
+        $entity = $quotation->entity;
+
+        $currency = $quotation->currency;
+
+        $subTotal = number_format($quotation->subtotal, 2);
+        $totalIgv = number_format($quotation->total_igv, 2);
+        $total = number_format($quotation->total_pay, 2);
+
+        $converter = new Num2Letters();
+        $totalInLetters = $converter->convert($total, $currency->id == 1 ? "SOLES" : "DOLARES");
+
+
+        $pdf = Pdf::loadView("pdf.cotizacion", compact(
+            "quotation",
+            "details",
+            // "company",
+            "entity",
+            "currency",
+
+            // "descuentos",
+            // "valorVenta",
+
+            "subTotal",
+            "totalIgv",
+            "total",
+            "totalInLetters"
+        ));
+
+        return $pdf->stream();
+
+        // return view("pdf.cotizacion", compact(
+        //     "quotation",
+        //     "details",
+        //     // "company",
+        //     "entity",
+        //     "currency",
+
+        //     // "descuentos",
+        //     // "valorVenta",
+
+        //     "subTotal",
+        //     "totalIgv",
+        //     "total",
+        //     "totalInLetters"
+        // ));
     }
 }
