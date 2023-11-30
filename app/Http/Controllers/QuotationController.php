@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Quotation;
+use App\Models\QuotationDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -121,8 +122,9 @@ class QuotationController extends Controller
 
             $ok = true;
             $data = $quotation;
+            $message = "Cotizacion creada con exito";
 
-            return response()->json(compact("ok", "data"));
+            return response()->json(compact("ok", "data", "message"));
         } catch (\Throwable $th) {
             throw $th;
 
@@ -130,6 +132,89 @@ class QuotationController extends Controller
 
             $ok = false;
             $errors = ["Error al crear la cotizacion"];
+            return response()->json(compact("ok", "errors"));
+        }
+    }
+
+    public function update(Request $request, Quotation $quotation)
+    {
+        $validator = Validator::make($request->all(), [
+            'currency_id' => 'integer',
+            'entity_id' => 'integer',
+
+            "discount" => 'numeric',
+            "discount_type" => 'numeric',
+            "discount_percent" => 'numeric',
+
+            "subtotal" => 'numeric',
+            "total_igv" => 'numeric',
+            "total_pay" => 'numeric',
+
+            "note" => 'string|nullable',
+            "observations" => 'string|nullable',
+
+            "is_active" => 'boolean',
+        ]);
+
+
+        $detailsValidator = Validator::make($request->all(), [
+            "details.*.id" => 'integer|required',
+            "details.*.product_id" => 'integer',
+            "details.*.tax_id" => 'integer',
+            "details.*.quantity" => 'integer',
+            "details.*.price_base" => 'numeric',
+            "details.*.code" => 'string',
+            "details.*.description" => 'string',
+            "details.*.description_add" => 'string|nullable',
+            "details.*.discount_percent" => 'numeric',
+        ]);
+
+
+        if ($validator->fails()) {
+            $ok = false;
+            $errors = $validator->errors()->all();
+            return response()->json(compact("ok", "errors"));
+        }
+
+        if ($request->has('details') && $detailsValidator->fails()) {
+            $ok = false;
+            $errors = $detailsValidator->errors()->all();
+            return response()->json(compact("ok", "errors"));
+        }
+
+        DB::beginTransaction();
+
+        try {
+            // Actualizar la cotizacion
+            $quotation->update($request->all());
+
+            if ($request->has('details')) {
+                foreach ($request->input('details') as $detail) {
+                    $cotizacionDetalle = QuotationDetail::find($detail['id']);
+                    $cotizacionDetalle->update($detail);
+                }
+            }
+
+            DB::commit();
+
+            $quotation->load(
+                "currency:id,symbol",
+                "entity:id,name,document_type_id,document_number",
+                "user:id,name",
+            );
+
+            $ok = true;
+            $data = $quotation;
+            $message = "Cotizacion actualizada con exito";
+
+            return response()->json(compact("ok", "data", "message"));
+        } catch (\Throwable $th) {
+            throw $th;
+
+            DB::rollBack();
+
+            $ok = false;
+            $errors = ["Error al actualizar la cotizacion"];
             return response()->json(compact("ok", "errors"));
         }
     }

@@ -22,6 +22,7 @@ class Quotation extends Model
         "total_pay",
         "note",
         "observations",
+        "is_active",
     ];
 
     public $casts = [
@@ -30,12 +31,14 @@ class Quotation extends Model
         "subtotal" => "float",
         "total_igv" => "float",
         "total_pay" => "float",
+        "is_active" => "boolean",
     ];
 
     protected $attributes = [
         "discount" => 0,
         "discount_type" => 1,
         "discount_percent" => 0,
+        "is_active" => true,
     ];
 
     static function generateNextNumber()

@@ -28,6 +28,9 @@ return new class extends Migration
 
             $table->string("note")->nullable();
             $table->string("observations")->nullable();
+
+            $table->boolean("is_active")->default(true);
+
             $table->timestamps();
         });
     }
