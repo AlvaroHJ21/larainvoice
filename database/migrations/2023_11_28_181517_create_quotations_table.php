@@ -31,6 +31,10 @@ return new class extends Migration
 
             $table->boolean("is_active")->default(true);
 
+            $table->boolean("is_approved")->default(false);
+            $table->foreignId("quotation_id")->nullable()->constrained("quotations");
+            $table->string("purchase_order_number")->nullable();
+
             $table->timestamps();
         });
     }

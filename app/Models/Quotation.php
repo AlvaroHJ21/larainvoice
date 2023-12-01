@@ -27,6 +27,10 @@ class Quotation extends Model
         "observations",
 
         "is_active",
+
+        "is_approved",
+        "quotation_id",
+        "purchase_order_number",
     ];
 
     public $casts = [
@@ -36,6 +40,7 @@ class Quotation extends Model
         "total_igv" => "float",
         "total_pay" => "float",
         "is_active" => "boolean",
+        "is_approved" => "boolean",
     ];
 
     protected $attributes = [
@@ -43,6 +48,9 @@ class Quotation extends Model
         "discount_type" => 1,
         "discount_percent" => 0,
         "is_active" => true,
+        "is_approved" => false,
+        "quotation_id" => null,
+        "purchase_order_number" => null,
     ];
 
     static function generateNextNumber()

@@ -265,7 +265,7 @@ class QuotationController extends Controller
         // return view("pdf.quotation", compact(
         //     "quotation",
         //     "details",
-        //     // "company",
+        //     "company",
         //     "entity",
         //     "currency",
 

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Cotización #{{ str_pad($quotation->number, 5, '0', STR_PAD_LEFT) }}</title>
     <link rel="stylesheet" href="{{ public_path('css/pdf.utils.css') }}">
     <link rel="stylesheet" href="{{ public_path('css/pdf.css') }}">
 </head>
@@ -167,11 +167,6 @@
             SON: {{ $totalInLetters }}
         </div>
     </div>
-
-    {{-- <pre>
-        {{ json_encode($empresa, JSON_PRETTY_PRINT) }}
-        {{ public_path('storage/' . $empresa->logo) }}
-    </pre> --}}
 </body>
 
 </html>
