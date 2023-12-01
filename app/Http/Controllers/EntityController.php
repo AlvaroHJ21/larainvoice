@@ -10,7 +10,8 @@ class EntityController extends Controller
 {
     public function index()
     {
-        $data = Entity::orderBy('created_at', 'desc')->get();
+        $data = Entity::where('is_active', true)
+            ->orderBy('created_at', 'desc')->get();
         $ok = true;
         return response()->json(compact("ok", "data"));
     }
@@ -21,11 +22,11 @@ class EntityController extends Controller
             'type' => 'required|numeric|in:1,2,3',
             'name' => 'required|string',
             'document_type_id' => 'required|numeric',
-            'document_number' => 'required|string',
+            'document_number' => 'required|string|unique:entities,document_number',
             'address' => 'required|string',
             'ubigeo' => 'required|string|size:6',
-            'phone' => 'required|string|max:11',
-            'email' => 'required|email',
+            'phone' => 'nullable|string|max:11',
+            'email' => 'nullable|email',
             'is_retention_agent' => 'boolean',
             'discount_percentage' => 'numeric',
         ]);
@@ -33,7 +34,7 @@ class EntityController extends Controller
         if ($validator->fails()) {
             $ok = false;
             $errors = $validator->errors()->all();
-            return response()->json(compact("ok", "errors"));
+            return response()->json(compact("ok", "errors"), 400);
         }
 
         $entity = Entity::create($request->all());
@@ -71,5 +72,15 @@ class EntityController extends Controller
         $data = $entity;
         $message = "Entidad actualizada correctamente";
         return response()->json(compact("ok", "data", "message"));
+    }
+
+    public function destroy(Entity $entity)
+    {
+        $entity->is_active = false;
+        $entity->save();
+
+        $ok = true;
+        $message = "Entidad eliminada correctamente";
+        return response()->json(compact("ok", "message"));
     }
 }

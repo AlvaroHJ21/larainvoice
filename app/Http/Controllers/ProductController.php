@@ -103,9 +103,13 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        $product->delete();
 
-        //eliminar imagen
+        $product->is_active = false;
+        $product->save();
+
+        // $product->delete();
+
+        // eliminar imagen
         if ($product->image) {
             Storage::delete('public/images/' . $product->image);
         }

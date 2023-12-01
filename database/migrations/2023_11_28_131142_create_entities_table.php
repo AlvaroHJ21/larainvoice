@@ -16,14 +16,17 @@ return new class extends Migration
             $table->smallInteger("type");
             $table->string("name");
             $table->foreignId("document_type_id")->constrained("entity_document_types");
-            $table->string("document_number");
+            $table->string("document_number")->unique();
             $table->string("address");
             $table->char("ubigeo", 6);
-            $table->string("phone", 11);
-            $table->string("email");
+
+            $table->string("phone", 11)->nullable();
+            $table->string("email")->nullable();
+
             $table->boolean("is_retention_agent")->default(false);
             $table->float("discount_percentage")->default(0);
             $table->boolean("is_active")->default(true);
+
             $table->timestamps();
         });
     }
