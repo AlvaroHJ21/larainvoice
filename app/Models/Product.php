@@ -12,14 +12,16 @@ class Product extends Model
     protected $fillable = [
         "code",
         "name",
+        "image",
         "category_id",
         "unit_id",
-        "image",
+        "tax_id",
+
         "selling_price",
         "selling_price_currency_id",
         "buy_price",
         "buy_price_currency_id",
-        "tax_id",
+
         "is_active",
     ];
 

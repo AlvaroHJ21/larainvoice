@@ -17,8 +17,10 @@ class QuotationDetail extends Model
         "description_add",
         "quantity",
         "price_base",
+
         "tax_id",
         "unit_id",
+
         "discount",
         "discount_type",
         "discount_percent",

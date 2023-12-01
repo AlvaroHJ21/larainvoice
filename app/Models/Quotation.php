@@ -14,14 +14,18 @@ class Quotation extends Model
         "currency_id",
         "entity_id",
         "user_id",
+
         "discount",
         "discount_type",
         "discount_percent",
+
         "subtotal",
         "total_igv",
         "total_pay",
+
         "note",
         "observations",
+
         "is_active",
     ];
 

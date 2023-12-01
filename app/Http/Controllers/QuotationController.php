@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Num2Letters;
 use App\Models\Business;
+use App\Models\Company;
 use App\Models\Quotation;
 use App\Models\QuotationDetail;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -224,6 +225,7 @@ class QuotationController extends Controller
 
     public function pdf(Quotation $quotation)
     {
+        $company = Company::first();
 
         $details = $quotation->details;
         // $details->load("product", "tax", "unit");
@@ -244,8 +246,8 @@ class QuotationController extends Controller
 
         $pdf = Pdf::loadView("pdf.quotation", compact(
             "quotation",
+            "company",
             "details",
-            // "company",
             "entity",
             "currency",
 

@@ -18,34 +18,30 @@
             <tr>
                 <td class="logo-td" style="width: 160px">
                     <div class="logo" style="max-width: 160px">
-                        {{-- <img src="{{ public_path('/storage/images/' . $company->logo) }}" alt="logo"> --}}
+                        <img src="{{ public_path('/storage/images/' . $company->logo) }}" alt="logo">
                     </div>
                 </td>
                 <td>
                     <table class="text-sm table-empresa">
                         <tr>
                             <td colspan="3">
-                                {{-- <div class="font-bold uppercase">{{ $empresa->razon_social }}</div> --}}
-                                <div class="font-bold uppercase">RAZON SOCIAL</div>
+                                <div class="font-bold uppercase">{{ $company->business_name }}</div>
                             </td>
                         </tr>
                         <tr>
                             <td>WhatsApp</td>
                             <td style="width: 10px">:</td>
-                            {{-- <td>{{ $empresa->telefono_movil }}</td> --}}
-                            <td>999999999</td>
+                            <td>{{ $company->phone }}</td>
                         </tr>
                         <tr>
                             <td>E-Mail</td>
                             <td>:</td>
-                            {{-- <td>{{ $empresa->email }}</td> --}}
-                            <td>someemail@email.com</td>
+                            <td>{{ $company->email }}</td>
                         </tr>
                         <tr>
                             <td>Webside</td>
                             <td>:</td>
-                            {{-- <td>{{ $empresa->web }}</td> --}}
-                            <td>www.some.com</td>
+                            <td>{{ $company->website }}</td>
                         </tr>
                     </table>
                 </td>
@@ -53,8 +49,7 @@
                     <div class="inline-block border py-2 font-bold text-center" style="width: 160px">
                         <div>COTIZACIÓN</div>
                         <div>#{{ str_pad($quotation->number, 5, '0', STR_PAD_LEFT) }}</div>
-                        {{-- <div> RUC:{{ $empresa->ruc }}</div> --}}
-                        <div> RUC:11111111111</div>
+                        <div> RUC:{{ $company->ruc }}</div>
                     </div>
                 </td>
             </tr>
@@ -81,7 +76,7 @@
         <tr>
             <td>Tipo de Moneda</td>
             <td>:</td>
-            <td class="uppercase">{{ $currency->nombre }}</td>
+            <td class="uppercase">{{ $currency->name }}</td>
         </tr>
     </table>
 

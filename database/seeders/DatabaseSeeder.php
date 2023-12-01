@@ -94,5 +94,41 @@ class DatabaseSeeder extends Seeder
             'name' => 'OTROS',
             'abbreviated' => 'OTROS',
         ]);
+
+        // Entities
+        \App\Models\Entity::create([
+            'type' => 1,
+            'name' => 'ALVARO HUAYSARA JAUREGUI',
+            'document_type_id' => 1,
+            'document_number' => 70768167,
+            'address' => 'Los Laureles Mz E Lt 13',
+            'ubigeo' => '321321',
+            'phone' => '926513695',
+            'email' => 'alvarohuaysara@gmail.com',
+        ]);
+
+
+        // Company
+        \App\Models\Company::create([
+            "ruc" => "43214321432",
+            "business_name" => "VEGACORP SOLUTIONS S.A.C",
+            "trade_name" => "-",
+            "fiscal_address" => "AV. CANADA NRO. 1966",
+            "ubigeo" => "150130",
+            "district" => "LIMA",
+            "province" => "LIMA",
+            "department" => "LIMA",
+
+            "phone" => "987654321",
+            "email" => "vengas@vegas.pe",
+            "website" => "www.vegas.pe",
+            "logo" => "",
+
+            "secondary_user_username" => "MODDATOS",
+            "secondary_user_password" => "MODDATOS",
+            "client_id" => "test-85e5b0ae-255c-4891-a595-0b98c65c9854",
+            "client_secret" => "test-Hty/M6QshYvPgItX2P0+Kw==",
+            "access_token" => "test-eyJhbGciOiJIUzUxMiJ9.ImExODY3NjM3LWQ2YzItNGNkYi05OTc4LTcwYzQ4YjU5NjAwMSI.7Rqqbrq6Cr5TYa5BjHmlSk_HdgD7XaMeQb48i_W8aVAh3CDzkuYBOWZLy24bYI11s_rJFKXqVKx7RiuD7XuA9A",
+        ]);
     }
 }
