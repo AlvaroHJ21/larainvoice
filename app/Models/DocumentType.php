@@ -14,4 +14,6 @@ class DocumentType extends Model
         'name',
         'abbreviated',
     ];
+
+    public $timestamps = false;
 }

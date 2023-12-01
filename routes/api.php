@@ -11,6 +11,8 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\MovementController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\QuotationController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SerialController;
 use App\Http\Controllers\StorehouseController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\UnitController;
@@ -59,3 +61,7 @@ Route::resource("exchange-rates", ExchangeRateController::class);
 Route::resource("quotations", QuotationController::class);
 
 Route::resource("companies", CompanyController::class);
+
+Route::resource("sale-orders", SaleController::class);
+
+Route::resource("serials", SerialController::class);

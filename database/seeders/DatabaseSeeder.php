@@ -78,6 +78,28 @@ class DatabaseSeeder extends Seeder
             'type' => '9996',
         ]);
 
+        // Products
+        \App\Models\Product::create([
+            "code" => "P0001",
+            "name" => "Sensor de temperatura",
+            "image" => "OLpkXlb2loWvq2yXwgACaXe9pZStC6FUK2MUaYrF.jpg",
+            "category_id" => 2,
+            "unit_id" => 1,
+            "tax_id" => 1,
+
+            "selling_price" => 16.9492,
+            "selling_price_currency_id" => 1,
+        ]);
+
+        // ExchageRates
+
+        \App\Models\ExchangeRate::create([
+            "provider" => 1,
+            "currency_id" => 2,
+            "rate" => 3.7000,
+        ]);
+
+
         // EntityDocumentTypes
         \App\Models\EntityDocumentType::create([
             'code' => '1',
@@ -122,13 +144,33 @@ class DatabaseSeeder extends Seeder
             "phone" => "987654321",
             "email" => "vengas@vegas.pe",
             "website" => "www.vegas.pe",
-            "logo" => "",
+            "logo" => "nxrcaTstc3tSO2zuvwNwdj7LQC8QGttPb9QHCKVm.png",
 
             "secondary_user_username" => "MODDATOS",
             "secondary_user_password" => "MODDATOS",
             "client_id" => "test-85e5b0ae-255c-4891-a595-0b98c65c9854",
             "client_secret" => "test-Hty/M6QshYvPgItX2P0+Kw==",
             "access_token" => "test-eyJhbGciOiJIUzUxMiJ9.ImExODY3NjM3LWQ2YzItNGNkYi05OTc4LTcwYzQ4YjU5NjAwMSI.7Rqqbrq6Cr5TYa5BjHmlSk_HdgD7XaMeQb48i_W8aVAh3CDzkuYBOWZLy24bYI11s_rJFKXqVKx7RiuD7XuA9A",
+        ]);
+
+        // DocumentTypes
+        \App\Models\DocumentType::create([
+            "code" => "01",
+            "name" => "Factura",
+            "abbreviated" => "Factura",
+        ]);
+        \App\Models\DocumentType::create([
+            "code" => "03",
+            "name" => "Boleta de venta",
+            "abbreviated" => "Boleta",
+        ]);
+
+        // Serials
+        \App\Models\Serial::create([
+            "serial" => "F001",
+            "correlative" => 1,
+            "description" => "Factura electrónica",
+            "document_type_id" => 1,
         ]);
     }
 }
