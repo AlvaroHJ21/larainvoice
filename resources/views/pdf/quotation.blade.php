@@ -115,7 +115,7 @@
                     <td>{{ $detail->description }}</td>
                     <td>
                         @if ($detail->product->image == null)
-                            <img src="{{ public_path('/storage/images/no-image.jpg') }}" width="100">
+                            <img src="{{ public_path('/storage/images/static/no-image.jpg') }}" width="100">
                         @else
                             <img src="{{ public_path('/storage/images/' . $detail->product->image) }}" width="100">
                         @endif
