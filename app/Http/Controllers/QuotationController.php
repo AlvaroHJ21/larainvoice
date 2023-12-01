@@ -242,7 +242,7 @@ class QuotationController extends Controller
         $totalInLetters = $converter->convert($total, $currency->id == 1 ? "SOLES" : "DOLARES");
 
 
-        $pdf = Pdf::loadView("pdf.cotizacion", compact(
+        $pdf = Pdf::loadView("pdf.quotation", compact(
             "quotation",
             "details",
             // "company",
@@ -260,7 +260,7 @@ class QuotationController extends Controller
 
         return $pdf->stream();
 
-        // return view("pdf.cotizacion", compact(
+        // return view("pdf.quotation", compact(
         //     "quotation",
         //     "details",
         //     // "company",
