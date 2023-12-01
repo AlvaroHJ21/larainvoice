@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\EntityController;
@@ -56,3 +57,5 @@ Route::get("exchange-rates/todays-change", [ExchangeRateController::class, "toda
 Route::resource("exchange-rates", ExchangeRateController::class);
 
 Route::resource("quotations", QuotationController::class);
+
+Route::resource("companies", CompanyController::class);

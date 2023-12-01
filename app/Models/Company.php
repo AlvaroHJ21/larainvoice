@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Business extends Model
+class Company extends Model
 {
     use HasFactory;
 
@@ -18,15 +18,26 @@ class Business extends Model
         "district",
         "province",
         "department",
+
         "phone",
         "email",
         "website",
         "logo",
+
         "secondary_user_username",
         "secondary_user_password",
         "client_id",
         "client_secret",
         "access_token",
+
         "in_production",
+    ];
+
+    protected $attributes = [
+        'in_production' => false,
+    ];
+
+    public $casts = [
+        "in_production" => "boolean",
     ];
 }

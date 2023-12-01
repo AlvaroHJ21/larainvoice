@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('businesses', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string("ruc", 11);
             $table->string("business_name");
@@ -21,16 +21,20 @@ return new class extends Migration
             $table->string("district");
             $table->string("province");
             $table->string("department");
-            $table->string("phone");
-            $table->string("email");
-            $table->string("website");
-            $table->string("logo");
-            $table->string("secondary_user_username");
-            $table->string("secondary_user_password");
-            $table->string("client_id");
-            $table->string("client_secret");
-            $table->string("access_token");
+
+            $table->string("phone")->nullable();
+            $table->string("email")->nullable();
+            $table->string("website")->nullable();
+            $table->string("logo")->nullable();
+
+            $table->string("secondary_user_username")->nullable();
+            $table->string("secondary_user_password")->nullable();
+            $table->string("client_id")->nullable();
+            $table->string("client_secret")->nullable();
+            $table->string("access_token")->nullable();
+
             $table->boolean("in_production")->default(false);
+
             $table->timestamps();
         });
     }
@@ -40,6 +44,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('businesses');
+        Schema::dropIfExists('companies');
     }
 };
