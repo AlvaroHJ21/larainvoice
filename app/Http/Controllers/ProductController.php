@@ -19,7 +19,9 @@ class ProductController extends Controller
             "tax:id,name,percentage",
             "inventories:id,product_id,storehouse_id,total",
             "inventories.storehouse:id,name"
-        )->orderBy("created_at", "desc")->get();
+        )
+            ->where("is_active", true)
+            ->orderBy("created_at", "desc")->get();
 
         $ok = true;
         return response()->json(compact("ok", "data"));
