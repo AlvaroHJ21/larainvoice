@@ -30,7 +30,7 @@ return new class extends Migration
 
             $table->string("digest_value")->nullable();
 
-            $table->foreignId("sale_id")->nullable()->constrained("sales");
+            $table->foreignId("sale_id")->nullable()->constrained("sales")->cascadeOnDelete();
 
             $table->timestamps();
         });

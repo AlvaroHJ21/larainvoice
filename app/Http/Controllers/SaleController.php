@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inventory;
 use App\Models\Sale;
 use App\Models\SaleDetail;
 use App\Models\Serial;
@@ -112,6 +113,15 @@ class SaleController extends Controller
             // Crear los detalles de la venta
             foreach ($request->details as $detail) {
                 $sale->details()->create($detail);
+                // Actualizar el inventario
+                $inventory = Inventory::find($detail['inventory_id']);
+                $inventory->total -= $detail['quantity'];
+                $inventory->save();
+                // Crear el movimiento de inventario
+                $inventory->movements()->create([
+                    "quantity" => $detail['quantity'],
+                    "type" => 0,
+                ]);
             }
 
             // Crear los pagos de la venta
@@ -123,6 +133,9 @@ class SaleController extends Controller
             $correlative = Serial::find($request->document['serial_id'])->next_correlative();
             $document = array_merge($request->document, ['correlative' => $correlative]);
             $sale->document()->create($document);
+
+
+
 
 
             DB::commit();
