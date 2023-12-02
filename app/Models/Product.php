@@ -60,4 +60,9 @@ class Product extends Model
         return $this->belongsTo(Tax::class);
     }
 
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class);
+    }
+
 }

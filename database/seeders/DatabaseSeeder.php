@@ -91,6 +91,12 @@ class DatabaseSeeder extends Seeder
             "selling_price_currency_id" => 1,
         ]);
 
+        // Storehouses
+        \App\Models\Storehouse::create([
+            "name" => "Almacén principal",
+            "user_id" => 1,
+        ]);
+
         // ExchageRates
 
         \App\Models\ExchangeRate::create([

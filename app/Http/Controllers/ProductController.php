@@ -17,6 +17,8 @@ class ProductController extends Controller
             "selling_price_currency:id,name,symbol",
             "buy_price_currency:id,name",
             "tax:id,name,percentage",
+            "inventories:id,product_id,storehouse_id,total",
+            "inventories.storehouse:id,name"
         )->orderBy("created_at", "desc")->get();
 
         $ok = true;
@@ -52,6 +54,8 @@ class ProductController extends Controller
             "selling_price_currency:id,name,symbol",
             "buy_price_currency:id,name",
             "tax:id,name,percentage",
+            "inventories:id,product_id,storehouse_id,total",
+            "inventories.storehouse:id,name"
         );
 
         $ok = true;
@@ -94,6 +98,8 @@ class ProductController extends Controller
             "selling_price_currency:id,name,symbol",
             "buy_price_currency:id,name",
             "tax:id,name,percentage",
+            "inventories:id,product_id,storehouse_id,total",
+            "inventories.storehouse:id,name"
         );
 
         $ok = true;
