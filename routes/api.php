@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BillingDocumentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ConfigurationController;
@@ -67,3 +68,5 @@ Route::resource("sale-orders", SaleController::class);
 Route::resource("serials", SerialController::class);
 
 Route::resource("sales", SaleController::class);
+
+Route::resource("documents", BillingDocumentController::class);

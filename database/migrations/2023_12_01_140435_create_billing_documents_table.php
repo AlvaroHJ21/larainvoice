@@ -20,8 +20,8 @@ return new class extends Migration
             $table->date("emission_date");
             $table->date("due_date")->nullable();
 
-            $table->foreignId("document_type_code");
-            $table->string("operation_type_id");
+            $table->string("document_type_code");
+            $table->integer("operation_type_id");
 
             $table->boolean("sent_to_sunat")->default(false);
             $table->boolean("accepted_by_sunat")->default(false);
