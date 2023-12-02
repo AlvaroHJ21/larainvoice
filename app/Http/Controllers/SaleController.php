@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Sale;
 use App\Models\SaleDetail;
+use App\Models\Serial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -17,6 +18,8 @@ class SaleController extends Controller
             "currency:id,symbol",
             "entity:id,name,document_type_id,document_number",
             "user:id,name",
+            "document",
+            "document.serial:id,serial",
         )
             ->orderBy('created_at', 'desc')
             ->get();
@@ -33,7 +36,10 @@ class SaleController extends Controller
             "details",
             "details.product",
             "details.tax",
-            "details.unit"
+            "details.unit",
+            "document",
+            "document.serial:id,serial",
+            "payments",
         )
             ->findOrFail($id);
         return response()->json(compact("ok", "data"));
@@ -59,15 +65,29 @@ class SaleController extends Controller
             "quotation_id" => 'integer|nullable',
             "purchase_order_number" => 'string|nullable',
 
-
+            "details" => 'required|array',
             "details.*.product_id" => 'required|integer',
+            "details.*.inventory_id" => 'required|integer',
             "details.*.tax_id" => 'required|integer',
+            "details.*.unit_id" => 'required|integer',
             "details.*.quantity" => 'required|integer',
             "details.*.price_base" => 'required|numeric',
             "details.*.code" => 'required|string',
             "details.*.description" => 'required|string',
             "details.*.description_add" => 'string|nullable',
-            "details.*.discount_percent" => 'numeric',
+
+            "payments" => 'required|array',
+            "payments.*.date" => 'required|date',
+            "payments.*.amount" => 'required|numeric',
+            "payments.*.observations" => 'string|nullable',
+            "payments.*.payment_method_id" => 'required|integer',
+
+            "document" => 'required|array',
+            "document.serial_id" => 'required|integer',
+            "document.document_type_code" => 'required|string',
+            "document.emission_date" => 'required|date',
+            "document.due_date" => 'required|date',
+            "document.operation_type_id" => 'required|integer',
         ]);
 
         if ($validator->fails()) {
@@ -84,27 +104,40 @@ class SaleController extends Controller
                 "number" => Sale::generateNextNumber(),
                 "user_id" => 1,
             ]);
-            $saleOrder = Sale::create($request->all());
+            $sale = Sale::create($request->all());
 
-            $saleOrder->save();
+            $sale->save();
 
 
-            // Crear los detalles de la cotizacion
+            // Crear los detalles de la venta
             foreach ($request->details as $detail) {
-                $saleOrder->details()->create($detail);
+                $sale->details()->create($detail);
             }
+
+            // Crear los pagos de la venta
+            foreach ($request->payments as $payment) {
+                $sale->payments()->create($payment);
+            }
+
+            // Crear el documento
+            $correlative = Serial::find($request->document['serial_id'])->next_correlative();
+            $document = array_merge($request->document, ['correlative' => $correlative]);
+            $sale->document()->create($document);
+
 
             DB::commit();
 
-            $saleOrder->load(
+            $sale->load(
                 "currency:id,symbol",
                 "entity:id,name,document_type_id,document_number",
                 "user:id,name",
+                "document",
+                "document.serial:id,serial",
             );
 
             $ok = true;
-            $data = $saleOrder;
-            $message = "Orden de venta creada con exito";
+            $data = $sale;
+            $message = "Venta creada con exito";
 
             return response()->json(compact("ok", "data", "message"));
         } catch (\Throwable $th) {
@@ -113,12 +146,12 @@ class SaleController extends Controller
             DB::rollBack();
 
             $ok = false;
-            $errors = ["Error al crear la orden de venta"];
+            $errors = ["Error al crear la venta"];
             return response()->json(compact("ok", "errors"));
         }
     }
 
-    public function update(Request $request, Sale $saleOrder)
+    public function update(Request $request, Sale $sale)
     {
         $validator = Validator::make($request->all(), [
             'currency_id' => 'integer',
@@ -168,7 +201,7 @@ class SaleController extends Controller
 
         try {
             // Actualizar la cotizacion
-            $saleOrder->update($request->all());
+            $sale->update($request->all());
 
             if ($request->has('details')) {
                 foreach ($request->input('details') as $detail) {
@@ -179,15 +212,15 @@ class SaleController extends Controller
 
             DB::commit();
 
-            $saleOrder->load(
+            $sale->load(
                 "currency:id,symbol",
                 "entity:id,name,document_type_id,document_number",
                 "user:id,name",
             );
 
             $ok = true;
-            $data = $saleOrder;
-            $message = "Orden de venta actualizada con exito";
+            $data = $sale;
+            $message = "Venta actualizada con exito";
 
             return response()->json(compact("ok", "data", "message"));
         } catch (\Throwable $th) {
@@ -196,7 +229,7 @@ class SaleController extends Controller
             DB::rollBack();
 
             $ok = false;
-            $errors = ["Error al actualizar la orden de venta"];
+            $errors = ["Error al actualizar la venta"];
             return response()->json(compact("ok", "errors"));
         }
     }

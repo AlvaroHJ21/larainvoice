@@ -41,6 +41,11 @@ class Handler extends ExceptionHandler
                     $errors = ["Storehouse not found"];
                     return response()->json(compact("ok", "errors"), 404);
                 }
+                if ($request->is("api/sales/*")) {
+                    $ok = false;
+                    $errors = ["Sale not found"];
+                    return response()->json(compact("ok", "errors"), 404);
+                }
             }
         );
     }

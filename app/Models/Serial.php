@@ -31,7 +31,7 @@ class Serial extends Model
         return $this->belongsTo(DocumentType::class);
     }
 
-    public function get_correlative()
+    public function next_correlative()
     {
         $correlative = $this->correlative;
         $this->correlative = $correlative + 1;

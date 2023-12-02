@@ -20,6 +20,7 @@ class SaleDetail extends Model
 
         "tax_id",
         "unit_id",
+        "inventory_id",
 
         "discount",
         "discount_type",

@@ -39,6 +39,9 @@ class ProductController extends Controller
             "buy_price_currency_id" => "integer",
             "tax_id" => "required|integer",
             "is_active" => "boolean",
+
+            "initial_stock" => "required|numeric|min:0",
+            "storehouse_id" => "integer|nullable",
         ]);
 
         if ($validator->fails()) {
@@ -47,7 +50,18 @@ class ProductController extends Controller
             return response()->json(compact("ok", "errors"), 400);
         }
 
-        $data = Product::create($request->all());
+        $product = Product::create($request->all());
+        if ($request->has("initial_stock") && $request->initial_stock > 0) {
+            $product->inventories()->create([
+                "storehouse_id" => $request->storehouse_id,
+                "total" => $request->initial_stock,
+            ])->movements()->create([
+                "type" => 1,
+                "quantity" => $request->initial_stock,
+            ]);
+        }
+
+        $data = $product;
         $data->load(
             "category:id,name",
             "unit:id,name",
@@ -57,6 +71,8 @@ class ProductController extends Controller
             "inventories:id,product_id,storehouse_id,total",
             "inventories.storehouse:id,name"
         );
+
+
 
         $ok = true;
         $message = "Producto creado correctamente";

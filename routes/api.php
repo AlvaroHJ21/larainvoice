@@ -65,3 +65,5 @@ Route::resource("companies", CompanyController::class);
 Route::resource("sale-orders", SaleController::class);
 
 Route::resource("serials", SerialController::class);
+
+Route::resource("sales", SaleController::class);

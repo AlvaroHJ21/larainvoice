@@ -97,8 +97,14 @@ class DatabaseSeeder extends Seeder
             "user_id" => 1,
         ]);
 
-        // ExchageRates
+        // Inventories
+        \App\Models\Inventory::create([
+            "product_id" => 1,
+            "storehouse_id" => 1,
+            "total" => 100,
+        ]);
 
+        // ExchageRates
         \App\Models\ExchangeRate::create([
             "provider" => 1,
             "currency_id" => 2,

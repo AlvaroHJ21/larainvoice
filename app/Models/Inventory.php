@@ -24,4 +24,9 @@ class Inventory extends Model
     {
         return $this->belongsTo(Storehouse::class);
     }
+
+    public function movements()
+    {
+        return $this->hasMany(Movement::class);
+    }
 }

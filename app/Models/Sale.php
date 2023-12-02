@@ -62,10 +62,7 @@ class Sale extends Model
         return $number;
     }
 
-    public function details()
-    {
-        return $this->hasMany(SaleDetail::class);
-    }
+
 
     public function currency()
     {
@@ -80,5 +77,20 @@ class Sale extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function details()
+    {
+        return $this->hasMany(SaleDetail::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function document()
+    {
+        return $this->hasOne(BillingDocument::class);
     }
 }
