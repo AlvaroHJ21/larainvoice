@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\QuotationController;
+use App\Http\Controllers\SaleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,3 +20,4 @@ Route::get('/', function () {
 });
 
 Route::get("/quotations/{quotation}/pdf", [QuotationController::class, "pdf"]);
+Route::get("/sales/{sale}/pdf", [SaleController::class, "pdf"]);

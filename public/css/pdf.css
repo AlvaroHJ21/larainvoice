@@ -78,3 +78,13 @@ img {
 .text-amount {
     font-weight: bold;
 }
+
+/* Table Payments */
+.table-payments {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.table-payments thead {
+    border: 1px solid #000;
+}

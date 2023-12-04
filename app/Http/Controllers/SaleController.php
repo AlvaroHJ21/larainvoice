@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Num2Letters;
+use App\Models\Company;
 use App\Models\Inventory;
 use App\Models\Payment;
 use App\Models\Sale;
 use App\Models\Serial;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -248,5 +251,39 @@ class SaleController extends Controller
             $errors = ["Error al actualizar la venta"];
             return response()->json(compact("ok", "errors"));
         }
+    }
+
+    public function pdf(Sale $sale)
+    {
+        $company = Company::first();
+
+        $details = $sale->details;
+
+        $entity = $sale->entity;
+
+        $currency = $sale->currency;
+
+        $subTotal = number_format($sale->subtotal, 2);
+        $totalIgv = number_format($sale->total_igv, 2);
+        $total = number_format($sale->total_pay, 2);
+
+        $converter = new Num2Letters();
+        // dd(["total" => 1]);
+        $totalInLetters = $converter->convert($total, $currency->id == 1 ? "SOLES" : "DOLARES");
+
+
+        $pdf = Pdf::loadView("pdf.sale", compact(
+            "sale",
+            "company",
+            "details",
+            "entity",
+            "currency",
+            "subTotal",
+            "totalIgv",
+            "total",
+            "totalInLetters"
+        ));
+
+        return $pdf->stream();
     }
 }

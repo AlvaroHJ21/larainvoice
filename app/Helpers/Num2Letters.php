@@ -6,6 +6,11 @@ class Num2Letters
 {
     function convert($total, $moneda)
     {
+
+        if (is_string($total)) {
+            $total = floatval($total);
+        }
+
         $total = explode(".",  number_format($total, 2));
 
 
