@@ -13,7 +13,7 @@ class Serial extends Model
         "serial",
         "correlative",
         "description",
-        "document_type_id",
+        "document_type_code",
         "is_active",
     ];
 
@@ -25,11 +25,6 @@ class Serial extends Model
         "is_active" => true,
         "correlative" => 1,
     ];
-
-    public function document_type()
-    {
-        return $this->belongsTo(DocumentType::class);
-    }
 
     public function next_correlative()
     {

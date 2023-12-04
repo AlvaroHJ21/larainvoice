@@ -166,23 +166,29 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // DocumentTypes
-        \App\Models\DocumentType::create([
-            "code" => "01",
-            "name" => "Factura",
-            "abbreviated" => "Factura",
-        ]);
-        \App\Models\DocumentType::create([
-            "code" => "03",
-            "name" => "Boleta de venta",
-            "abbreviated" => "Boleta",
-        ]);
+        // \App\Models\DocumentType::create([
+        //     "code" => "01",
+        //     "name" => "Factura",
+        //     "abbreviated" => "Factura",
+        // ]);
+        // \App\Models\DocumentType::create([
+        //     "code" => "03",
+        //     "name" => "Boleta de venta",
+        //     "abbreviated" => "Boleta",
+        // ]);
 
         // Serials
         \App\Models\Serial::create([
             "serial" => "F001",
             "correlative" => 1,
             "description" => "Factura electrónica",
-            "document_type_id" => 1,
+            "document_type_code" => "01",
+        ]);
+        \App\Models\Serial::create([
+            "serial" => "B001",
+            "correlative" => 1,
+            "description" => "Boleta de venta",
+            "document_type_code" => "03",
         ]);
     }
 }

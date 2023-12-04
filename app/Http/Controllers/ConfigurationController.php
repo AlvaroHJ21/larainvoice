@@ -14,11 +14,11 @@ class ConfigurationController extends Controller
     public function index()
     {
         $currencies = Currency::all();
-        $categories = Category::all();
+        $categories = Category::orderBy('created_at', 'desc')->get();
         $units = Unit::all();
         $taxes = Tax::all();
-        $serials = Serial::with('document_type')->get();
-        $storehouses = Storehouse::all();
+        $serials = Serial::orderBy('created_at', 'desc')->get();
+        $storehouses = Storehouse::orderBy('created_at', 'desc')->get();
 
         return response()->json([
             "ok" => true,

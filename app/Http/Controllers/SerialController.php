@@ -10,7 +10,7 @@ class SerialController extends Controller
 {
     public function index()
     {
-        $data = Serial::with('document_type')->get();
+        $data = Serial::orderBy('created_at', 'desc')->get();
         $ok = true;
         return response()->json(compact('ok', 'data'));
     }
@@ -18,7 +18,7 @@ class SerialController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'document_type_id' => 'required|integer',
+            'document_type_code' => 'required|string',
             'serial' => 'required|string|unique:serials,serial',
         ]);
 
@@ -28,12 +28,7 @@ class SerialController extends Controller
             return response()->json(compact('ok', 'errors'));
         }
 
-        // $request->merge([
-        //     'correlative' => 1,
-        // ]);
-
         $serial = Serial::create($request->all());
-        $serial->load('document_type');
 
         $ok = true;
         $data = $serial;
@@ -45,7 +40,7 @@ class SerialController extends Controller
     public function update(Request $request, Serial $serial)
     {
         $validator = Validator::make($request->all(), [
-            'document_type_id' => 'integer',
+            'document_type_code' => 'string',
             'serial' => 'string|unique:serials,serial',
             'is_active' => 'boolean',
         ]);
@@ -57,7 +52,6 @@ class SerialController extends Controller
         }
 
         $serial->update($request->all());
-        $serial->load('document_type');
 
         $ok = true;
         $data = $serial;

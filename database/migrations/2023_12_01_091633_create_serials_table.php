@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("serial");
             $table->integer("correlative")->default(1);
             $table->string("description")->nullable();
-            $table->foreignId("document_type_id")->constrained("document_types");
+            $table->string("document_type_code");
             $table->boolean("is_active")->default(true);
             $table->timestamps();
         });
