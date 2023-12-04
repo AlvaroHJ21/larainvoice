@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('billing_documents', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId("serial_id")->constrainted("serials");
+            $table->foreignId("serial_id")->constrained("serials");
             $table->integer("correlative");
 
             $table->date("emission_date");

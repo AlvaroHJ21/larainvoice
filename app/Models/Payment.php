@@ -21,6 +21,11 @@ class Payment extends Model
         'observations' => null,
     ];
 
+    public $casts = [
+        "amount" => "float",
+    ];
+
+
     public function sale()
     {
         return $this->belongsTo(Sale::class);

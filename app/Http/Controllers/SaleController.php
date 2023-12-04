@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inventory;
+use App\Models\Payment;
 use App\Models\Sale;
-use App\Models\SaleDetail;
 use App\Models\Serial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -36,10 +36,12 @@ class SaleController extends Controller
             "user",
             "details",
             "details.product",
+            "details.product.inventories",
+            "details.product.inventories.storehouse:id,name",
             "details.tax",
             "details.unit",
             "document",
-            "document.serial:id,serial",
+            "document.serial",
             "payments",
         )
             ->findOrFail($id);
@@ -167,34 +169,20 @@ class SaleController extends Controller
     public function update(Request $request, Sale $sale)
     {
         $validator = Validator::make($request->all(), [
-            'currency_id' => 'integer',
-            'entity_id' => 'integer',
-
-            "discount" => 'numeric',
-            "discount_type" => 'numeric',
-            "discount_percent" => 'numeric',
-
-            "subtotal" => 'numeric',
-            "total_igv" => 'numeric',
-            "total_pay" => 'numeric',
-
             "note" => 'string|nullable',
             "observations" => 'string|nullable',
+
+            "purchase_order_number" => 'string|nullable',
 
             "is_active" => 'boolean',
         ]);
 
-
-        $detailsValidator = Validator::make($request->all(), [
-            "details.*.id" => 'integer|required',
-            "details.*.product_id" => 'integer',
-            "details.*.tax_id" => 'integer',
-            "details.*.quantity" => 'integer',
-            "details.*.price_base" => 'numeric',
-            "details.*.code" => 'string',
-            "details.*.description" => 'string',
-            "details.*.description_add" => 'string|nullable',
-            "details.*.discount_percent" => 'numeric',
+        $paymentsValidator = Validator::make($request->all(), [
+            "payments.*.id" => 'integer|required',
+            "payments.*.date" => 'date',
+            "payments.*.amount" => 'numeric',
+            "payments.*.observations" => 'string|nullable',
+            "payments.*.payment_method_id" => 'integer',
         ]);
 
 
@@ -204,9 +192,9 @@ class SaleController extends Controller
             return response()->json(compact("ok", "errors"));
         }
 
-        if ($request->has('details') && $detailsValidator->fails()) {
+        if ($request->has('payments') && $paymentsValidator->fails()) {
             $ok = false;
-            $errors = $detailsValidator->errors()->all();
+            $errors = $paymentsValidator->errors()->all();
             return response()->json(compact("ok", "errors"));
         }
 
@@ -216,10 +204,23 @@ class SaleController extends Controller
             // Actualizar la cotizacion
             $sale->update($request->all());
 
-            if ($request->has('details')) {
-                foreach ($request->input('details') as $detail) {
-                    $cotizacionDetalle = SaleDetail::find($detail['id']);
-                    $cotizacionDetalle->update($detail);
+            if ($request->has('payments')) {
+
+                //* Eliminar los pagos que no estan en la peticion
+                foreach ($sale->payments as $payment) {
+                    if (!in_array($payment->id, array_column($request->input('payments'), 'id'))) {
+                        $payment->delete();
+                    }
+                }
+
+                //* Actualizar o crear los pagos
+                foreach ($request->input('payments') as $payment) {
+                    $salePayment = Payment::find($payment['id']);
+                    if ($salePayment) {
+                        $salePayment->update($payment);
+                    } else {
+                        $sale->payments()->create($payment);
+                    }
                 }
             }
 
@@ -229,6 +230,8 @@ class SaleController extends Controller
                 "currency:id,symbol",
                 "entity:id,name,document_type_id,document_number",
                 "user:id,name",
+                "document",
+                "document.serial:id,serial",
             );
 
             $ok = true;
