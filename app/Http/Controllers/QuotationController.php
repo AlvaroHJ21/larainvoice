@@ -7,6 +7,7 @@ use App\Models\Business;
 use App\Models\Company;
 use App\Models\Quotation;
 use App\Models\QuotationDetail;
+use App\Models\SaleDetail;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -193,9 +194,20 @@ class QuotationController extends Controller
             $quotation->update($request->all());
 
             if ($request->has('details')) {
+                //* Eliminar los detalles que no estan en la peticion
+                foreach ($quotation->details as $detail) {
+                    if (!in_array($detail->id, array_column($request->input('details'), 'id'))) {
+                        $detail->delete();
+                    }
+                }
+                //* Actualizar o crear los detalles
                 foreach ($request->input('details') as $detail) {
-                    $cotizacionDetalle = QuotationDetail::find($detail['id']);
-                    $cotizacionDetalle->update($detail);
+                    $quotationDetail = SaleDetail::find($detail['id']);
+                    if ($quotationDetail) {
+                        $quotationDetail->update($detail);
+                    } else {
+                        $quotation->details()->create($detail);
+                    }
                 }
             }
 
