@@ -17,6 +17,7 @@ use App\Http\Controllers\SerialController;
 use App\Http\Controllers\StorehouseController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\VehicleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -59,12 +60,11 @@ Route::resource("entities", EntityController::class);
 Route::get("exchange-rates/todays-change", [ExchangeRateController::class, "todaysChange"]);
 Route::resource("exchange-rates", ExchangeRateController::class);
 
-Route::resource("quotations", QuotationController::class);
-
 Route::resource("companies", CompanyController::class);
 
+Route::resource("quotations", QuotationController::class);
 Route::resource("serials", SerialController::class);
-
 Route::resource("sales", SaleController::class);
-
 Route::resource("documents", BillingDocumentController::class);
+
+Route::resource("vehicles", VehicleController::class);
