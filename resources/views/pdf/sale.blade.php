@@ -171,9 +171,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($sale->payments as $payment)
+                @foreach ($sale->payments as $idx => $payment)
                     <tr>
-                        <td>1</td>
+                        <td>{{ $idx + 1 }}</td>
                         <td>{{ date('d/m/Y', strtotime($payment->date)) }}</td>
                         <td>{{ $currency->symbol }} {{ $payment->amount }}</td>
                     </tr>
