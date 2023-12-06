@@ -7,6 +7,7 @@ use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\EntityController;
 use App\Http\Controllers\ExchangeRateController;
+use App\Http\Controllers\GuideController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\MovementController;
@@ -68,3 +69,5 @@ Route::resource("sales", SaleController::class);
 Route::resource("documents", BillingDocumentController::class);
 
 Route::resource("vehicles", VehicleController::class);
+
+Route::resource("guides", GuideController::class);
