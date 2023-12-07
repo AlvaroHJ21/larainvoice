@@ -17,6 +17,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SerialController;
 use App\Http\Controllers\StorehouseController;
 use App\Http\Controllers\TaxController;
+use App\Http\Controllers\UbigeoController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Http\Request;
@@ -71,3 +72,4 @@ Route::resource("documents", BillingDocumentController::class);
 Route::resource("vehicles", VehicleController::class);
 
 Route::resource("guides", GuideController::class);
+Route::get("ubigeos", [UbigeoController::class, "index"]);
